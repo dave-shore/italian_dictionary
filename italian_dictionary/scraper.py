@@ -4,7 +4,7 @@ from urllib import parse
 
 from italian_dictionary import exceptions
 
-URL = "https://www.dizionario-italiano.it/dizionario-italiano.php?parola={}100"
+URL = "https://www.dizionario-italiano.it/dizionario-italiano.php?parola={}"
 
 
 def build_url(base_url):
