@@ -13,14 +13,17 @@ This package searches for word meanings on [dizionario-italiano](https://www.diz
 pip install italian-dictionary
 ```
 ## Usage
+
+After setting your headers in a dictionary (let's call it `headers`):
+
 ```python
 import italian_dictionary
 
 # Use this to get only the meaning 
-definition = italian_dictionary.get_definition('cane', limit=3, all_data=False) 
+definition = italian_dictionary.get_definition('cane', headers = headers, limit=3, all_data=False) 
 
 #Use this to get all datas of a word (all_data default is True)
-datas = italian_dictionary.get_definition('albero')
+datas = italian_dictionary.get_definition('albero', headers = headers)
 ```
  #### Complete data response
  This function will return a dictionary like this:
