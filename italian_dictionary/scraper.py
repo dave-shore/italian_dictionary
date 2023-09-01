@@ -54,18 +54,29 @@ def get_sillabe(soup, word):
 
 def get_pronuncia(soup):
     pronuncia = soup.find('span', class_="paradigma")
-    return pronuncia.text[10:]
+
+    if pronuncia is None:
+        return ""
+    else:
+        return pronuncia.text[10:]
 
 
 def get_grammatica(soup):
     gram = soup.find_all('span', class_="grammatica")
-    return [x.text for x in gram]
+
+    if gram is None:
+        return []
+    else:
+        return [x.text for x in gram]
 
 
 def get_locuzioni(soup):
     bad_loc = soup.find_all('span', class_='cit_ita_1')
-    loc = [x.text for x in bad_loc]
-    return loc
+    
+    if bad_loc is None:
+        return []
+    else:
+        return [x.text for x in bad_loc]
 
 
 def get_defs(soup):

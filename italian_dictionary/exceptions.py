@@ -1,3 +1,3 @@
-class WordNotFoundError(Exception):
+class WordNotFoundError(BaseException):
     pass
 
