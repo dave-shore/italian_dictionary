@@ -2,9 +2,15 @@ import bs4
 import urllib.request as request
 from urllib import parse
 
-from italian_dictionary import exceptions
+from .exceptions import *
 
-URL = "https://www.dizionario-italiano.it/dizionario-italiano.php?parola={}"
+URL = "https://www.dizionario-italiano.it/dizionario-italiano.php?lemma={}100"
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+       'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+       'Accept-Encoding': 'none',
+       'Accept-Language': 'it-IT,it;q=0.5',
+       'Connection': 'keep-alive'} 
 
 
 def build_url(base_url):
@@ -13,8 +19,9 @@ def build_url(base_url):
     return parse.urlunsplit((scheme, netloc, path, query, fragment))  # replacing special characters
 
 
-def get_soup(url):
-    sauce = request.urlopen(url).read()
+def get_soup(url, headers):
+    q = request.Request(url = url, headers = headers)
+    sauce = request.urlopen(q).read()
     soup = bs4.BeautifulSoup(sauce, 'html.parser')
     return soup
 
@@ -82,13 +89,13 @@ def get_defs(soup):
         else:
             defs.append(definitions.text)
     if len(defs) == 0:
-        raise exceptions.WordNotFoundError()
+        raise WordNotFoundError()
     return defs
 
 
-def get_data(word, all_data=True):
+def get_data(word, headers, all_data=True):
     url = build_url(URL.format(word))
-    soup = get_soup(url)
+    soup = get_soup(url, headers)
     if all_data is False:
         return get_defs(soup)
 
